@@ -12,7 +12,9 @@
       type="text"
       placeholder="Описание"
     />
-    <button @click="createPost" class="btn">Добавить пост</button>
+    <my-button style="align-self: flex-end; margin: 15px 0" @click="createPost"
+      >Добавить пост</my-button
+    >
   </form>
 </template>
 
@@ -40,25 +42,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .form {
   display: flex;
   flex-direction: column;
-}
-
-.input {
-  width: 100%;
-  border: 1px solid teal;
-  padding: 10px 15px;
-  margin-top: 15px;
-}
-
-.btn {
-  margin-top: 15px;
-  align-self: flex-end;
-  padding: 10px;
-  background: #fff;
-  color: teal;
-  border: 1px solid teal;
 }
 </style>
