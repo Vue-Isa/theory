@@ -1,17 +1,7 @@
 <template>
   <form class="form" @submit.prevent>
-    <input
-      v-model="post.title"
-      class="input"
-      type="text"
-      placeholder="Название"
-    />
-    <input
-      v-model="post.body"
-      class="input"
-      type="text"
-      placeholder="Описание"
-    />
+    <my-input v-model="post.title" type="text" placeholder="Название" />
+    <my-input v-model="post.body" type="text" placeholder="Описание" />
     <my-button style="align-self: flex-end; margin: 15px 0" @click="createPost"
       >Добавить пост</my-button
     >
@@ -25,6 +15,7 @@ export default {
       post: {
         title: "",
         body: "",
+        id: null,
       },
     };
   },
