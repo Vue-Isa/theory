@@ -1,6 +1,12 @@
 <template>
   <div class="app">
-    <post-form @create="createPost" />
+    <h1>Страница с постами</h1>
+    <my-button style="margin: 15px 0" @click="showDialog"
+      >Создать пост</my-button
+    >
+    <my-dialog v-model:show="dialogVisible">
+      <post-form @create="createPost" />
+    </my-dialog>
     <post-list :posts="posts" @remove="removePost" />
   </div>
 </template>
@@ -8,6 +14,7 @@
 <script>
 import PostForm from "./components/PostForm.vue";
 import PostList from "./components/PostList.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -16,22 +23,36 @@ export default {
   },
   data() {
     return {
-      posts: [
-        { id: 1, title: "Javascipt", body: "описание JS" },
-        { id: 2, title: "Pyton", body: "описание Pyton" },
-        { id: 3, title: "Ruby", body: "описание Ruby" },
-        { id: 4, title: "C++", body: "описание C++" },
-      ],
+      posts: [],
+      dialogVisible: false,
     };
   },
 
   methods: {
     createPost(post) {
       this.posts.push(post);
+      this.dialogVisible = false;
     },
     removePost(post) {
       this.posts = this.posts.filter((p) => p.id !== post.id);
     },
+    showDialog() {
+      this.dialogVisible = true;
+    },
+    async fetchPosts() {
+      try {
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+        );
+        this.posts = response.data;
+      } catch (e) {
+        alert("ошбика");
+      }
+    },
+  },
+
+  mounted() {
+    this.fetchPosts();
   },
 };
 </script>
