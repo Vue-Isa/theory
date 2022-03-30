@@ -1,15 +1,22 @@
 <template>
   <div class="app">
-    <form class="form">
-      <input class='input' type="text" placeholder="Название">
-      <input class='input' type="text" placeholder="Описание">
+    <form class="form" @submit.prevent>
+      <input
+      v-bind:value="title"
+      @input="title = $event.target.value"
+      class='input' type="text"
+      placeholder="Название">
+      <input
+      v-bind:value="body"
+      @input="body = $event.target.value"
+      class='input' type="text"
+      placeholder="Описание">
       <button @click="createPost" class='btn'>Добавить пост</button>
     </form>
-    <div class="post" v-for="post in posts">
+    <div class="post" v-for="post in posts" :key="post.id">
       <div><strong>Название:</strong> {{post.title}}</div>
       <div><strong>Описание:</strong> {{post.body}}</div>
     </div>
-
   </div>
 </template>
 
@@ -22,12 +29,24 @@
         {id: 2, title: 'Pyton', body: 'описание Pyton'},
         {id: 3, title: 'Ruby', body: 'описание Ruby'},
         {id: 4, title: 'C++', body: 'описание C++'}
-      ]
+      ],
+      title: '',
+      body: '',
+
     }
   },
 
   methods: {
-    
+    createPost() {
+      const newPost = {
+        id: Date.now(),
+        title: this.title,
+        body: this.body,
+      }
+      this.posts.push(newPost)
+      this.title = ''
+      this.body = ''
+    },
   }
   }
 </script>
@@ -58,7 +77,7 @@
   .input {
     width: 100%;
     border:1px solid teal;
-    pad: 10px 15px;
+    padding: 10px 15px;
     margin-top: 15px;
   }
 
